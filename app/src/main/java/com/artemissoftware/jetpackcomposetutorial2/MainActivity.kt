@@ -18,7 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -26,6 +34,60 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        val fontFamily = FontFamily(
+            Font(R.font.kleeone_regular, FontWeight.Normal),
+            Font(R.font.kleeone_semibold, FontWeight.SemiBold)
+        )
+
+        setContent {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFF101010))){
+
+                Text(
+                    text = buildAnnotatedString {
+                                                withStyle(
+                                                    style = SpanStyle(
+                                                        color = Color.Green,
+                                                        fontSize = 50.sp
+                                                    )
+                                                ){
+                                                    append("A")
+                                                }
+                        append("rtemis is the ")
+
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Green,
+                                fontSize = 50.sp
+                            )
+                        ){
+                            append("H")
+                        }
+
+                        append("unter")
+
+                    },
+                    color = Color.White,
+                    fontSize = 30.sp,
+                    fontFamily = fontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center,
+                    textDecoration = TextDecoration.Underline
+                )
+            }
+
+
+        }
+
+    }
+
+
+
+    fun imageCard(){
         setContent {
 
             val painter = painterResource(id = R.drawable.artemis_1)
@@ -35,14 +97,13 @@ class MainActivity : ComponentActivity() {
             Box(modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .padding(16.dp)) {
-                
+
                 ImageCard(painter = painter, contentDescription = description, title = title)
             }
 
         }
 
     }
-
 
     fun modifiers(){
         setContent {
