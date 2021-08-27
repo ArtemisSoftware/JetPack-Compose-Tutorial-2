@@ -3,36 +3,48 @@ package com.artemissoftware.jetpackcomposetutorial2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.artemissoftware.jetpackcomposetutorial2.ui.theme.JetPackComposeTutorial2Theme
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContent {
-            JetPackComposeTutorial2Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Artemis")
-                }
+
+//            Column(
+//                modifier = Modifier.fillMaxSize(),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.SpaceBetween
+//
+//            ) {
+//                Text(text = "Artemis")
+//                Text(text = "Software")
+//            }
+
+
+            Row(
+                modifier = Modifier
+                    .width(300.dp)
+                    .fillMaxHeight(0.7f)
+                    .background(Color.Green),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+
+            ) {
+                Text(text = "Artemis")
+                Text(text = "Software")
+                Text(text = "Github")
             }
+
+
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    JetPackComposeTutorial2Theme {
-        Greeting("Artemis")
-    }
-}
