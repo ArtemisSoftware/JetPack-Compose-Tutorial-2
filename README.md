@@ -6,5 +6,5 @@ App to explore and learn jetpack compose
 Tutorial app
 
 ## Topics
-    - MVVM
+    - Image card
     
