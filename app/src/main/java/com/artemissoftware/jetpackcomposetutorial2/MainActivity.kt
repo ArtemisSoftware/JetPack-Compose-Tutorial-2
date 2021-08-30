@@ -6,11 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -29,11 +32,33 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setContent {
+
+            Column(Modifier.fillMaxSize()){
+
+
+                val color = remember {
+                    mutableStateOf(Color.Yellow)
+                }
+
+                ColorBox(Modifier.weight(1f).fillMaxSize()) {
+                    color.value = it
+                }
+
+                Box(Modifier.background(color.value).weight(1f).fillMaxSize())
+            }
+        }
+
+    }
+
+
+    fun styleText(){
 
         val fontFamily = FontFamily(
             Font(R.font.kleeone_regular, FontWeight.Normal),
@@ -49,14 +74,14 @@ class MainActivity : ComponentActivity() {
 
                 Text(
                     text = buildAnnotatedString {
-                                                withStyle(
-                                                    style = SpanStyle(
-                                                        color = Color.Green,
-                                                        fontSize = 50.sp
-                                                    )
-                                                ){
-                                                    append("A")
-                                                }
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Green,
+                                fontSize = 50.sp
+                            )
+                        ){
+                            append("A")
+                        }
                         append("rtemis is the ")
 
                         withStyle(
@@ -205,4 +230,28 @@ fun ImageCard(
         }
 
     }
+}
+
+
+@Composable
+fun ColorBox(
+    modifier: Modifier = Modifier,
+    updateState: (Color) -> Unit
+){
+
+    Box(modifier = modifier
+        .background(Color.Red)
+        .clickable {
+
+            updateState(
+                Color(
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    1f
+                )
+            )
+
+        })
+
 }
