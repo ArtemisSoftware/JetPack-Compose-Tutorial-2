@@ -44,6 +44,55 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
+            val scaffoldState = rememberScaffoldState()
+            val scope = rememberCoroutineScope()
+
+            Scaffold(scaffoldState = scaffoldState) {
+
+
+
+//                var counter = produceState(initialValue = 0){
+//                    kotlinx.coroutines.delay(3000L)
+//                    value = 5
+//                }
+//
+//                if(counter.value % 5 == 0 && counter.value > 0) {
+//
+//                    LaunchedEffect(key1 = scaffoldState.snackbarHostState){
+//                         scaffoldState.snackbarHostState.showSnackbar("Hello")
+//                    }
+//
+//                }
+//
+//                Button(onClick = {  }){
+//                    Text("Click me ${counter.value}")
+//                }
+
+
+                var counter by remember {
+                    mutableStateOf(0)
+                }
+
+                if(counter % 5 == 0 && counter > 0) {
+
+                    LaunchedEffect(key1 = scaffoldState.snackbarHostState){
+                         scaffoldState.snackbarHostState.showSnackbar("Hello")
+                    }
+                }
+
+                Button(onClick = { counter++ }){
+                    Text("Click me ${counter}")
+                }
+
+            }
+
+        }
+    }
+
+
+    fun constraint_Layout(){
+        setContent {
+
 
             val constraints = ConstraintSet {
 
