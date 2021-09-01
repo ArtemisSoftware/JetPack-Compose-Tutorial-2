@@ -3,6 +3,8 @@ package com.artemissoftware.jetpackcomposetutorial2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -44,6 +46,51 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
+
+            var sizeState by remember {
+                mutableStateOf(200.dp)
+            }
+
+            
+            val size by animateDpAsState(
+                targetValue = sizeState,
+                keyframes {
+                    durationMillis = 5000
+                    sizeState at 0 with LinearEasing
+                    sizeState * 1.5f at 1000 with FastOutLinearInEasing
+                    sizeState * 2f at 5000
+                }
+            )
+            
+            
+            val inifiniteTransaction = rememberInfiniteTransition()
+            val color by inifiniteTransaction.animateColor(
+                initialValue = Color.Red,
+                targetValue = Color.Green,
+                animationSpec = infiniteRepeatable(
+                    tween(durationMillis = 2000),
+                    repeatMode = RepeatMode.Reverse
+
+                )
+            )
+
+            Box(modifier = Modifier
+                .size(size)
+                .background(color),
+                contentAlignment = Alignment.Center){
+                
+                Button(onClick = { sizeState += 50.dp }) {
+                    Text("Increase Size")
+                }
+            }
+
+        }
+    }
+
+
+    fun side_effects(){
+        setContent {
+
             val scaffoldState = rememberScaffoldState()
             val scope = rememberCoroutineScope()
 
@@ -76,7 +123,7 @@ class MainActivity : ComponentActivity() {
                 if(counter % 5 == 0 && counter > 0) {
 
                     LaunchedEffect(key1 = scaffoldState.snackbarHostState){
-                         scaffoldState.snackbarHostState.showSnackbar("Hello")
+                        scaffoldState.snackbarHostState.showSnackbar("Hello")
                     }
                 }
 
@@ -88,7 +135,6 @@ class MainActivity : ComponentActivity() {
 
         }
     }
-
 
     fun constraint_Layout(){
         setContent {
